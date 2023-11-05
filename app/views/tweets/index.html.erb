@@ -1,0 +1,14 @@
+<h1 style='background-color:rgb(32,128,188); color:rgb(255,255,255); padding: 10px'>KruTa Feeds</h1>
+<h2>Feed:</h2>
+  <% @tweets.each do |tweet| %>
+      <strong>User:</strong>
+      <%= link_to User.find(tweet.user_id).name, user_path(User.find(tweet.user_id)) %><br>
+      <strong>Title:</strong>
+      <%= tweet.title %><br>
+      <strong>Body:</strong>
+      <%= tweet.body %><br>
+    <button>
+      <%= link_to "View Tweet", tweet %>
+    </button>
+    <br><br>
+  <% end %>

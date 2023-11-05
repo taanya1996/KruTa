@@ -1,0 +1,60 @@
+<h2>
+  <strong>Title:</strong>
+  <%= @tweet.title %>
+</h2>
+<strong>User:</strong>
+<%= link_to User.find(@tweet.user_id).name, user_path(User.find(@tweet.user_id)) %>
+
+<p>
+  <%= @tweet.body %>
+</p>
+
+<button><%= link_to "Edit", edit_tweet_path(@tweet) %></button>
+<%= button_to 'Delete', @tweet, method: :delete,
+ :onclick => "return confirm('Are you sure you want to delete this tweet?')" %>
+
+<br>
+<br>
+
+<h3>Comments:</h3>
+  <% @tweet.comments.each do |comment| %>
+    <p>
+      <strong>Comment:</strong>
+      <%= link_to comment.body, comment %>
+    </p>
+    <p>
+      <strong>User:</strong>
+      <%= link_to User.find(comment.user_id).name, user_path(User.find(comment.user_id)) %>
+    </p>
+  <% end %>
+<br>
+<br>
+
+<h3>Comment on Tweet:</h3>
+<%= form_with model: [@tweet, @tweet.comments.build] do |form| %>
+  <p>
+    <%= form.label :User_Id %><br>
+    <%= form.text_field :user_id %>
+    <% if @tweet.comments.respond_to?(:errors) %>
+    <% @tweet.comments.errors.full_messages_for(:user_id).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+    <% end %>
+  </p>
+  <p>
+    <%= form.label :Comment %><br>
+    <%= form.text_area :body %>
+    <% if @tweet.comments.respond_to?(:errors) %>
+    <% @tweet.comments.errors.full_messages_for(:body).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+    <% end %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
+
+<br>
+
+<button><%= link_to "View All Tweets", tweets_path %></button>

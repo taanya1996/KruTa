@@ -1,0 +1,49 @@
+<h1> User Details </h1>
+<h2>Username: <%= @user.name %></h2>
+<h3>Email Address: <%= @user.email %></h3>
+
+<br><h3>Actions:</h3>
+
+<button><%= link_to "Edit User", edit_user_path(@user) %></button>
+<br><br>
+
+<%= button_to 'Destroy', @user, method: :delete,
+ :onclick => "return confirm('Are you sure you want to delete this user?')" %>
+
+
+<br>
+
+<div>
+  <br><h3>Tweets:</h3>
+    <% @user.tweets.each do |tweet| %>
+        <p>
+          <strong>Title:</strong>
+          <%= tweet.title %>
+        </p>
+        <p>
+          <strong>Body:</strong>
+          <%= tweet.body %>
+        </p>
+        <button type="button"> <%= link_to "View Tweet", tweet %></button>
+    <% end %>
+</div>
+
+<br>
+<br><h3>Add a tweet:</h3>
+<%= form_with model: [@user, @user.tweets.build] do |form| %>
+  <p>
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </p>
+  <p>
+    <%= form.label :body %>
+    <%= form.text_area :body %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
+
+<br><br>
+<button><%= link_to "User List", users_path %></button>
+

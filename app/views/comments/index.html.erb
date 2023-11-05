@@ -1,0 +1,19 @@
+<h1 style='background-color:rgb(32,128,188); color:rgb(255,255,255); padding: 10px'>Comments:</h1>
+
+<ul>
+  <% @comments.each do |comment| %>
+    <p>
+      <strong>Comment:</strong>
+      <%= link_to comment.body, comment %>
+    </p>
+    <p>
+      <strong>Tweet:</strong>
+      <%= link_to Tweet.find(comment.tweet_id).title, tweet_path(Tweet.find(comment.tweet_id)) %>
+    </p>
+    <p>
+      <strong>By:</strong>
+      <%= link_to User.find(comment.user_id).name, user_path(User.find(comment.user_id)) %>
+    </p>
+    <p> --------- </p>
+  <% end %>
+</ul>
